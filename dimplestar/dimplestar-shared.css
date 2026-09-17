@@ -1,0 +1,258 @@
+/* ============================================
+   DIMPLE STAR — SHARED DESIGN SYSTEM
+   Consistent styles across ALL pages
+   ============================================ */
+
+:root {
+  --ds-brand: #0077b6;
+  --ds-brand-dark: #005a89;
+  --ds-brand-light: #e6f3fa;
+  --ds-text: #0f172a;
+  --ds-muted: #475569;
+  --ds-border: #e5e7eb;
+  --ds-bg: #ffffff;
+  --ds-surface: #f8fafc;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--ds-text);
+  background: var(--ds-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   NAVBAR — FIXED WHITE
+   ============================================ */
+.navbar {
+  background-color: rgba(255,255,255,.92) !important;
+  border-bottom: 1px solid rgba(15,23,42,.06);
+  transition: box-shadow .25s ease, background-color .25s ease;
+  backdrop-filter: saturate(160%) blur(12px);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+}
+
+.navbar-scrolled {
+  box-shadow: 0 8px 30px rgba(2,8,23,.08);
+}
+
+.navbar-brand {
+  font-weight: 800;
+  color: var(--ds-brand) !important;
+  letter-spacing: .3px;
+  font-size: 1.15rem;
+}
+
+.nav-link {
+  color: var(--ds-text) !important;
+  font-weight: 600;
+  font-size: .95rem;
+  padding: .5rem .85rem !important;
+  border-radius: 8px;
+  transition: background .2s ease, color .2s ease;
+}
+
+.nav-link:hover {
+  color: var(--ds-brand-dark) !important;
+  background: var(--ds-brand-light);
+}
+
+.nav-link.active {
+  color: var(--ds-brand) !important;
+  background: var(--ds-brand-light);
+}
+
+/* ============================================
+   BTN-BRAND — THE KEY "Book Now" BUTTON
+   ============================================ */
+.btn-brand {
+  background: linear-gradient(135deg, var(--ds-brand), var(--ds-brand-dark));
+  color: #fff !important;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: .55rem 1.4rem;
+  font-size: .95rem;
+  letter-spacing: .2px;
+  box-shadow: 0 4px 14px rgba(0, 119, 182, .3);
+  transition: all .25s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-brand:hover,
+.btn-brand:focus {
+  background: linear-gradient(135deg, var(--ds-brand-dark), #004466);
+  color: #fff !important;
+  box-shadow: 0 6px 20px rgba(0, 119, 182, .4);
+  transform: translateY(-1px);
+}
+
+.btn-brand:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 119, 182, .25);
+}
+
+/* Size variants */
+.btn-brand.btn-sm {
+  padding: .4rem 1.1rem;
+  font-size: .875rem;
+  border-radius: 8px;
+}
+
+.btn-brand.btn-lg {
+  padding: .7rem 1.8rem;
+  font-size: 1.05rem;
+  border-radius: 12px;
+}
+
+/* ============================================
+   CARD-SOFT — SHARED CARD COMPONENT
+   ============================================ */
+.card-soft {
+  background: #fff;
+  border: 1px solid var(--ds-border);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(2, 8, 23, .05);
+  transition: box-shadow .3s ease, transform .3s ease;
+}
+
+.card-soft:hover {
+  box-shadow: 0 8px 28px rgba(2, 8, 23, .08);
+}
+
+/* ============================================
+   SECTION TITLES
+   ============================================ */
+.section-title {
+  font-weight: 800;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--ds-text);
+  letter-spacing: -.2px;
+}
+
+/* ============================================
+   MAIN CONTENT OFFSET
+   ============================================ */
+main {
+  padding-top: 84px;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+  background:
+    radial-gradient(600px 300px at 15% 20%, var(--ds-brand-light) 20%, transparent 70%),
+    radial-gradient(700px 320px at 85% 10%, #f0f7ff 20%, transparent 70%),
+    #fff;
+  border-bottom: 1px solid var(--ds-border);
+}
+
+.hero h1 {
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+
+.hero p.lead {
+  color: var(--ds-muted);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+  color: var(--ds-muted);
+  font-size: .95rem;
+  border-top: 1px solid var(--ds-border);
+}
+
+/* ============================================
+   OUTLINE BUTTON FIX
+   ============================================ */
+.btn-outline-secondary {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: .55rem 1.4rem;
+  transition: all .2s ease;
+}
+
+.btn-outline-secondary.btn-lg {
+  border-radius: 12px;
+  padding: .7rem 1.8rem;
+}
+
+/* ============================================
+   TABLE STYLING
+   ============================================ */
+th {
+  background: var(--ds-surface) !important;
+  font-weight: 700;
+  font-size: .9rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--ds-muted);
+}
+
+/* ============================================
+   FORM STYLING ENHANCEMENTS
+   ============================================ */
+.form-control,
+.form-select {
+  border-radius: 10px;
+  border: 1.5px solid var(--ds-border);
+  padding: .6rem .9rem;
+  font-size: .95rem;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--ds-brand);
+  box-shadow: 0 0 0 3px rgba(0, 119, 182, .12);
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: .9rem;
+  color: var(--ds-text);
+  margin-bottom: .4rem;
+}
+
+.form-check-input:checked {
+  background-color: var(--ds-brand);
+  border-color: var(--ds-brand);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    padding: 1rem 0;
+  }
+  .navbar-nav .nav-link {
+    padding: .6rem 1rem !important;
+  }
+  .navbar-nav .btn-brand {
+    margin-top: .5rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-title {
+    font-size: 1.3rem;
+  }
+  .btn-brand.btn-lg {
+    padding: .6rem 1.4rem;
+    font-size: .95rem;
+  }
+}

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dimple Star — Book Now</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="dimplestar-shared.css">
+
+  <style>
+    main { padding-top: 90px; padding-bottom: 50px; }
+    .step-indicator {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 30px;
+    }
+    .step-indicator::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      right: 20px;
+      height: 3px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+    .step-item {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      background: #fff;
+      padding: 0 8px;
+    }
+    .step-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #64748b;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 6px;
+      transition: all .2s;
+    }
+    .step-item.active .step-circle {
+      background: #0077b6;
+      color: #fff;
+      box-shadow: 0 0 0 4px rgba(0,119,182,.2);
+    }
+    .step-item.completed .step-circle {
+      background: #10b981;
+      color: #fff;
+    }
+    .step-title {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #64748b;
+    }
+    .step-item.active .step-title { color: #0077b6; }
+
+    /* Trip Card */
+    .trip-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      background: #fff;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .trip-card:hover {
+      border-color: #0077b6;
+      box-shadow: 0 4px 14px rgba(0,119,182,.1);
+    }
+
+    /* Bus Seat Layout */
+    .bus-container {
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .bus-driver {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .bus-seats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr) 30px repeat(2, 1fr);
+      gap: 10px 8px;
+    }
+    .aisle-gap { grid-column: 3; }
+    .seat-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #1e293b;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .seat-btn:hover:not(.occupied) {
+      border-color: #0077b6;
+      background: #e0f2fe;
+      color: #0077b6;
+    }
+    .seat-btn.selected {
+      background: #0077b6 !important;
+      color: #fff !important;
+      border-color: #0077b6 !important;
+    }
+    .seat-btn.occupied {
+      background: #e2e8f0;
+      color: #94a3b8;
+      border-color: #cbd5e1;
+      cursor: not-allowed;
+    }
+
+    /* Ticket Confirmation */
+    .ticket-voucher {
+      background: #ffffff;
+      border: 2px dashed #0077b6;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 25px rgba(0,119,182,.08);
+      position: relative;
+    }
+    .ticket-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #10b981;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: .5px;
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      #ticketPrintArea, #ticketPrintArea * { visibility: visible; }
+      #ticketPrintArea { position: absolute; left: 0; top: 0; width: 100%; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top no-print">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+      <span class="fs-5">🚌</span> Dimple Star
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="terminal.html">Terminals</a></li>
+        <li class="nav-item"><a class="nav-link" href="routeschedule.html">Routes/Schedules</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item ms-lg-3"><a class="btn btn-brand btn-sm" href="book.html">Book Now</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+
+  <!-- Step Progress Indicator -->
+  <div class="step-indicator no-print">
+    <div class="step-item active" id="stepIndicator1">
+      <div class="step-circle">1</div>
+      <div class="step-title">Trip Search</div>
+    </div>
+    <div class="step-item" id="stepIndicator2">
+      <div class="step-circle">2</div>
+      <div class="step-title">Select Bus</div>
+    </div>
+    <div class="step-item" id="stepIndicator3">
+      <div class="step-circle">3</div>
+      <div class="step-title">Select Seats</div>
+    </div>
+    <div class="step-item" id="stepIndicator4">
+      <div class="step-circle">4</div>
+      <div class="step-title">Confirmed Ticket</div>
+    </div>
+  </div>
+
+  <!-- ================= STEP 1: SEARCH ================= -->
+  <section id="step1" class="card-soft p-4">
+    <h2 class="h4 mb-1">Book Your Bus Ticket</h2>
+    <p class="text-muted small mb-4">Choose your origin, destination, and preferred departure time.</p>
+
+    <form id="searchForm" class="row g-3">
+      <div class="col-12">
+        <label class="form-label fw-bold">Trip Type</label>
+        <div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="tripType" id="oneWay" value="1" checked>
+            <label class="form-check-label" for="oneWay">One Way</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="tripType" id="twoWay" value="2">
+            <label class="form-check-label" for="twoWay">Round Trip</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label fw-bold">Origin Terminal</label>
+        <select class="form-select" id="originSelect" required>
+          <option value="Ali Mall Cubao">Ali Mall Cubao Terminal</option>
+          <option value="Alabang">Alabang Terminal</option>
+          <option value="Cabuyao">Cabuyao Terminal</option>
+          <option value="España" selected>España Terminal</option>
+          <option value="San Lazaro">San Lazaro Terminal</option>
+          <option value="Pasay">Pasay Terminal</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label fw-bold">Destination</label>
+        <select class="form-select" id="destSelect" required>
+          <option value="San Jose" selected>San Jose, Occidental Mindoro</option>
+          <option value="Pinamalayan">Pinamalayan</option>
+          <option value="Roxas">Roxas</option>
+          <option value="Bulalacao">Bulalacao</option>
+          <option value="Magsaysay">Magsaysay</option>
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label fw-bold">Departure Date</label>
+        <input type="date" class="form-control" id="departDate" required>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label fw-bold">Passengers</label>
+        <select class="form-select" id="passengersCount">
+          <option value="1" selected>1 Passenger</option>
+          <option value="2">2 Passengers</option>
+          <option value="3">3 Passengers</option>
+          <option value="4">4 Passengers</option>
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label fw-bold">Bus Class</label>
+        <select class="form-select" id="busTypeSelect">
+          <option value="All">All Types</option>
+          <option value="Air Conditioned" selected>Air Conditioned (₱300)</option>
+          <option value="Ordinary">Ordinary (₱200)</option>
+        </select>
+      </div>
+
+      <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-brand btn-lg w-100">Find Available Trips →</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ================= STEP 2: SELECT TRIP ================= -->
+  <section id="step2" class="card-soft p-4 d-none">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h2 class="h4 mb-0">Select Departure Bus</h2>
+        <div class="text-muted small" id="searchSummaryText"></div>
+      </div>
+      <button class="btn btn-outline-secondary btn-sm" id="btnBackToSearch">← Change Search</button>
+    </div>
+
+    <div id="tripsListContainer"></div>
+  </section>
+
+  <!-- ================= STEP 3: SEAT SELECTION & PASSENGER INFO ================= -->
+  <section id="step3" class="card-soft p-4 d-none">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="h4 mb-0">Pick Your Seat(s)</h2>
+        <div class="text-muted small" id="selectedBusSummaryText"></div>
+      </div>
+      <button class="btn btn-outline-secondary btn-sm" id="btnBackToTrips">← Back to Trips</button>
+    </div>
+
+    <div class="row gy-4">
+      <div class="col-lg-6">
+        <div class="bus-container">
+          <div class="bus-driver">
+            <span class="badge bg-secondary">🚌 Front of Bus</span>
+            <span class="small text-muted fw-bold">🚪 Entry Door</span>
+          </div>
+
+          <div class="bus-seats-grid" id="busSeatsGrid">
+            <!-- Dynamically generated seats -->
+          </div>
+
+          <div class="d-flex justify-content-center gap-3 mt-4 pt-3 border-top small text-muted">
+            <div class="d-flex align-items-center gap-1"><span class="seat-btn" style="width:18px;height:18px;cursor:default;"></span> Available</div>
+            <div class="d-flex align-items-center gap-1"><span class="seat-btn selected" style="width:18px;height:18px;cursor:default;"></span> Selected</div>
+            <div class="d-flex align-items-center gap-1"><span class="seat-btn occupied" style="width:18px;height:18px;cursor:default;"></span> Taken</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card p-4 border h-100">
+          <h5 class="mb-3">Passenger Information</h5>
+          <form id="passengerForm">
+            <div class="mb-3">
+              <label class="form-label small fw-bold">Full Name</label>
+              <input type="text" class="form-control" id="pName" placeholder="e.g. John Russel Magtibay" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-bold">Mobile Number</label>
+              <input type="tel" class="form-control" id="pPhone" placeholder="0912 345 6789" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-bold">Email Address</label>
+              <input type="email" class="form-control" id="pEmail" placeholder="russel@example.com" required>
+            </div>
+
+            <div class="p-3 bg-light rounded-3 mb-3">
+              <div class="d-flex justify-content-between mb-1 small">
+                <span>Selected Seats:</span>
+                <strong id="summarySelectedSeats">None selected</strong>
+              </div>
+              <div class="d-flex justify-content-between mb-1 small">
+                <span>Fare per Seat:</span>
+                <span id="summaryFarePerSeat">₱300</span>
+              </div>
+              <hr class="my-2">
+              <div class="d-flex justify-content-between fw-bold">
+                <span>Total Amount:</span>
+                <span class="text-primary fs-5" id="summaryTotalAmount">₱0</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-brand w-100 py-2" id="btnConfirmBooking">
+              Confirm &amp; Issue Ticket →
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STEP 4: TICKET CONFIRMATION ================= -->
+  <section id="step4" class="d-none">
+    <div class="ticket-voucher mx-auto" id="ticketPrintArea" style="max-width:680px;">
+      <span class="ticket-badge">CONFIRMED</span>
+      <div class="d-flex align-items-center gap-3 mb-3 border-bottom pb-3">
+        <span class="fs-2">🚌</span>
+        <div>
+          <h3 class="h5 mb-0 fw-bold">Dimple Star Transport</h3>
+          <small class="text-muted">Official Passenger E-Ticket Voucher</small>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-sm-6">
+          <small class="text-muted d-block">Ticket Number</small>
+          <strong class="fs-5 text-primary" id="ticketNumber">DS-82914</strong>
+        </div>
+        <div class="col-sm-6">
+          <small class="text-muted d-block">Booking Date</small>
+          <strong id="ticketBookingDate">Today</strong>
+        </div>
+        <div class="col-sm-6">
+          <small class="text-muted d-block">Passenger Name</small>
+          <strong id="ticketPassenger">John Russel Magtibay</strong>
+        </div>
+        <div class="col-sm-6">
+          <small class="text-muted d-block">Contact Phone</small>
+          <strong id="ticketPhone">0912 345 6789</strong>
+        </div>
+        <div class="col-sm-6">
+          <small class="text-muted d-block">Route</small>
+          <strong id="ticketRoute">España → San Jose</strong>
+        </div>
+        <div class="col-sm-6">
+          <small class="text-muted d-block">Departure Date &amp; Time</small>
+          <strong id="ticketDateTime">2026-09-20 @ 5:30 am</strong>
+        </div>
+        <div class="col-sm-6">
+          <small class="text-muted d-block">Bus Type</small>
+          <strong id="ticketBusType">Air Conditioned Express</strong>
+        </div>
+        <div class="col-sm-6">
+          <small class="text-muted d-block">Reserved Seat(s)</small>
+          <strong class="text-primary fs-5" id="ticketSeats">Seat 12, 13</strong>
+        </div>
+      </div>
+
+      <div class="p-3 bg-light rounded d-flex justify-content-between align-items-center">
+        <div>
+          <small class="text-muted d-block">Payment Status</small>
+          <span class="badge bg-success">PAID (Demo Mode)</span>
+        </div>
+        <div class="text-end">
+          <small class="text-muted d-block">Total Paid</small>
+          <strong class="fs-4 text-primary" id="ticketTotalPaid">₱600</strong>
+        </div>
+      </div>
+
+      <p class="small text-muted mt-3 mb-0">
+        * Please present this e-ticket along with a valid ID at the terminal boarding gate at least 30 minutes prior to departure.
+      </p>
+    </div>
+
+    <div class="text-center mt-4 no-print d-flex justify-content-center gap-3">
+      <button class="btn btn-outline-secondary" onclick="window.print()">🖨️ Print Ticket</button>
+      <button class="btn btn-brand" id="btnBookAnother">Book Another Trip</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="py-4 no-print">
+  <div class="container d-flex justify-content-between">
+    <div>© <span id="year">2026</span> Dimple Star Transport. All rights reserved.</div>
+    <div class="text-muted">Your safety is our priority.</div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Set default departure date to tomorrow
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  document.getElementById('departDate').value = tomorrow.toISOString().split('T')[0];
+
+  const yr = document.getElementById('year');
+  if (yr) yr.textContent = new Date().getFullYear();
+
+  // Route schedules from dimplestar.sql database records
+  const SCHEDULE_DB = [
+    { id: 1, origin: 'Ali Mall Cubao', dest: 'San Jose', time: '9:00 am', type: 'Air Conditioned', price: 300 },
+    { id: 2, origin: 'Ali Mall Cubao', dest: 'San Jose', time: '10:00 am', type: 'Air Conditioned', price: 300 },
+    { id: 3, origin: 'Ali Mall Cubao', dest: 'San Jose', time: '1:00 pm', type: 'Air Conditioned', price: 300 },
+    { id: 4, origin: 'Ali Mall Cubao', dest: 'San Jose', time: '4:00 pm', type: 'Ordinary', price: 200 },
+    { id: 5, origin: 'Alabang', dest: 'San Jose', time: '6:00 am', type: 'Air Conditioned', price: 300 },
+    { id: 6, origin: 'Alabang', dest: 'San Jose', time: '7:00 am', type: 'Ordinary', price: 200 },
+    { id: 7, origin: 'Alabang', dest: 'San Jose', time: '2:00 pm', type: 'Air Conditioned', price: 300 },
+    { id: 8, origin: 'Alabang', dest: 'San Jose', time: '6:00 pm', type: 'Air Conditioned', price: 300 },
+    { id: 9, origin: 'Cabuyao', dest: 'San Jose', time: '8:00 am', type: 'Air Conditioned', price: 300 },
+    { id: 10, origin: 'Cabuyao', dest: 'San Jose', time: '9:00 am', type: 'Ordinary', price: 200 },
+    { id: 11, origin: 'Cabuyao', dest: 'San Jose', time: '4:00 pm', type: 'Air Conditioned', price: 300 },
+    { id: 12, origin: 'España', dest: 'San Jose', time: '4:30 am', type: 'Air Conditioned', price: 300 },
+    { id: 13, origin: 'España', dest: 'San Jose', time: '5:30 am', type: 'Air Conditioned', price: 300 },
+    { id: 14, origin: 'España', dest: 'San Jose', time: '12:00 pm', type: 'Ordinary', price: 200 },
+    { id: 15, origin: 'España', dest: 'San Jose', time: '4:00 pm', type: 'Air Conditioned', price: 300 },
+    { id: 16, origin: 'España', dest: 'San Jose', time: '8:00 pm', type: 'Air Conditioned', price: 300 },
+    { id: 17, origin: 'San Lazaro', dest: 'San Jose', time: '3:00 am', type: 'Air Conditioned', price: 300 },
+    { id: 18, origin: 'San Lazaro', dest: 'San Jose', time: '4:30 am', type: 'Air Conditioned', price: 300 },
+    { id: 19, origin: 'San Lazaro', dest: 'San Jose', time: '11:00 am', type: 'Ordinary', price: 200 },
+    { id: 20, origin: 'Pasay', dest: 'San Jose', time: '5:00 am', type: 'Air Conditioned', price: 300 },
+    { id: 21, origin: 'Pasay', dest: 'San Jose', time: '6:00 am', type: 'Air Conditioned', price: 300 },
+    { id: 22, origin: 'Pasay', dest: 'San Jose', time: '1:00 pm', type: 'Air Conditioned', price: 300 }
+  ];
+
+  // Booking state
+  let currentSearch = {};
+  let selectedTrip = null;
+  let selectedSeats = [];
+
+  // Step 1 Submission: Search Trips
+  document.getElementById('searchForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const origin = document.getElementById('originSelect').value;
+    const dest = document.getElementById('destSelect').value;
+    const date = document.getElementById('departDate').value;
+    const count = parseInt(document.getElementById('passengersCount').value, 10);
+    const busType = document.getElementById('busTypeSelect').value;
+
+    currentSearch = { origin, dest, date, count, busType };
+
+    // Filter schedules
+    let matches = SCHEDULE_DB.filter(s => {
+      const matchOrigin = s.origin.toLowerCase().includes(origin.toLowerCase()) || origin.toLowerCase().includes(s.origin.toLowerCase());
+      const matchType = (busType === 'All') || (s.type === busType);
+      return matchOrigin && matchType;
+    });
+
+    if (matches.length === 0) {
+      // Fallback to provide good demo experience
+      matches = [
+        { id: 101, origin, dest, time: '06:00 am', type: busType === 'Ordinary' ? 'Ordinary' : 'Air Conditioned', price: busType === 'Ordinary' ? 200 : 300 },
+        { id: 102, origin, dest, time: '10:30 am', type: 'Air Conditioned', price: 300 },
+        { id: 103, origin, dest, time: '04:00 pm', type: 'Air Conditioned', price: 300 }
+      ];
+    }
+
+    renderTrips(matches);
+    goToStep(2);
+  });
+
+  function renderTrips(trips) {
+    document.getElementById('searchSummaryText').textContent =
+      `${currentSearch.origin} → ${currentSearch.dest} • ${currentSearch.date} • ${currentSearch.count} passenger(s)`;
+
+    const container = document.getElementById('tripsListContainer');
+    container.innerHTML = '';
+
+    trips.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'trip-card d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3';
+      card.innerHTML = `
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge ${t.type === 'Air Conditioned' ? 'bg-primary' : 'bg-secondary'}">${t.type}</span>
+            <span class="badge bg-light text-dark border">Dimple Star Express</span>
+          </div>
+          <div class="fs-5 fw-bold">${t.time} <span class="text-muted fs-6 fw-normal">Departure</span></div>
+          <div class="text-muted small">${t.origin} Terminal → ${t.dest} Terminal</div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between gap-4">
+          <div class="text-md-end">
+            <div class="fs-4 fw-bold text-primary">₱${t.price}</div>
+            <div class="small text-muted">per passenger</div>
+          </div>
+          <button class="btn btn-brand btn-select-trip" data-id="${t.id}">Select Trip →</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    container.querySelectorAll('.btn-select-trip').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const tid = parseInt(e.currentTarget.getAttribute('data-id'), 10);
+        selectedTrip = trips.find(x => x.id === tid) || trips[0];
+        initSeatSelection();
+        goToStep(3);
+      });
+    });
+  }
+
+  // Step 2 & 3 navigation
+  document.getElementById('btnBackToSearch').addEventListener('click', () => goToStep(1));
+  document.getElementById('btnBackToTrips').addEventListener('click', () => goToStep(2));
+
+  // Initialize Seat Selector
+  function initSeatSelection() {
+    selectedSeats = [];
+    document.getElementById('selectedBusSummaryText').textContent =
+      `${selectedTrip.origin} → ${selectedTrip.dest} (${selectedTrip.time}) • ${selectedTrip.type}`;
+
+    const grid = document.getElementById('busSeatsGrid');
+    grid.innerHTML = '';
+
+    // Mock realistic occupied seats
+    const occupiedSeats = [3, 7, 8, 14, 15, 21, 22, 30];
+
+    for (let i = 1; i <= 36; i++) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'seat-btn';
+      btn.textContent = i;
+
+      if (occupiedSeats.includes(i)) {
+        btn.classList.add('occupied');
+        btn.title = `Seat ${i} is occupied`;
+      } else {
+        btn.addEventListener('click', () => toggleSeat(i, btn));
+      }
+
+      grid.appendChild(btn);
+
+      // Aisle gap every row (2 seats, aisle, 2 seats)
+      if (i % 4 === 2) {
+        const aisle = document.createElement('div');
+        aisle.className = 'aisle-gap';
+        grid.appendChild(aisle);
+      }
+    }
+
+    updateSeatSummary();
+  }
+
+  function toggleSeat(seatNum, btn) {
+    const idx = selectedSeats.indexOf(seatNum);
+    if (idx > -1) {
+      selectedSeats.splice(idx, 1);
+      btn.classList.remove('selected');
+    } else {
+      if (selectedSeats.length >= currentSearch.count) {
+        alert(`You searched for ${currentSearch.count} passenger(s). Please unselect a seat or increase passenger count.`);
+        return;
+      }
+      selectedSeats.push(seatNum);
+      btn.classList.add('selected');
+    }
+    updateSeatSummary();
+  }
+
+  function updateSeatSummary() {
+    const seatsText = selectedSeats.length > 0 ? selectedSeats.join(', ') : 'None selected';
+    document.getElementById('summarySelectedSeats').textContent = seatsText;
+    document.getElementById('summaryFarePerSeat').textContent = `₱${selectedTrip.price}`;
+    const total = selectedSeats.length * selectedTrip.price;
+    document.getElementById('summaryTotalAmount').textContent = `₱${total}`;
+  }
+
+  // Step 3 Submission: Passenger Info & Confirmation
+  document.getElementById('passengerForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (selectedSeats.length !== currentSearch.count) {
+      alert(`Please select exactly ${currentSearch.count} seat(s) on the bus diagram before proceeding.`);
+      return;
+    }
+
+    const name = document.getElementById('pName').value;
+    const phone = document.getElementById('pPhone').value;
+    const email = document.getElementById('pEmail').value;
+    const ticketId = 'DS-' + Math.floor(10000 + Math.random() * 90000);
+
+    // Fill ticket confirmation
+    document.getElementById('ticketNumber').textContent = ticketId;
+    document.getElementById('ticketBookingDate').textContent = new Date().toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+    document.getElementById('ticketPassenger').textContent = name;
+    document.getElementById('ticketPhone').textContent = phone;
+    document.getElementById('ticketRoute').textContent = `${currentSearch.origin} → ${currentSearch.dest}`;
+    document.getElementById('ticketDateTime').textContent = `${currentSearch.date} @ ${selectedTrip.time}`;
+    document.getElementById('ticketBusType').textContent = selectedTrip.type;
+    document.getElementById('ticketSeats').textContent = `Seat ${selectedSeats.join(', ')}`;
+    document.getElementById('ticketTotalPaid').textContent = `₱${selectedSeats.length * selectedTrip.price}`;
+
+    goToStep(4);
+  });
+
+  document.getElementById('btnBookAnother').addEventListener('click', () => {
+    selectedSeats = [];
+    document.getElementById('searchForm').reset();
+    document.getElementById('passengerForm').reset();
+    goToStep(1);
+  });
+
+  function goToStep(step) {
+    [1, 2, 3, 4].forEach(s => {
+      document.getElementById(`step${s}`).classList.add('d-none');
+      const ind = document.getElementById(`stepIndicator${s}`);
+      if (ind) {
+        ind.classList.remove('active', 'completed');
+        if (s < step) ind.classList.add('completed');
+        if (s === step) ind.classList.add('active');
+      }
+    });
+    document.getElementById(`step${step}`).classList.remove('d-none');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

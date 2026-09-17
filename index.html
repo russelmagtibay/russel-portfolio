@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>John Russel M. Magtibay</title>
+  <meta name="description" content="Portfolio of John Russel M. Magtibay — BSIT Graduate specializing in AWS Cloud and Full-Stack Development." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="light-mode">
+
+  <!-- ==================== HEADER ==================== -->
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Go to home">
+        <span class="brand-badge">JR</span>
+        <span class="brand-name">John Russel M. Magtibay</span>
+      </a>
+
+      <div class="nav-right">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+          <span class="toggle-thumb"></span>
+        </button>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false">Menu</button>
+
+        <ul id="navMenu" aria-label="Primary navigation">
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN ==================== -->
+  <main id="home">
+    <div class="container">
+
+      <!-- ===== HERO ===== -->
+      <section class="hero hero-centered" aria-label="Introduction">
+        <div class="hero-inner">
+          <div class="hero-badge">
+            <span class="badge-dot-green"></span>
+            <span>Open to Work — Cloud / AWS Roles</span>
+          </div>
+
+          <h1 class="hero-title">
+            Hi, I'm <span class="highlight">John</span><br>
+            <span class="highlight">Russel</span><br>
+            M. Magtibay
+          </h1>
+
+          <p class="hero-subtitle">
+            Fresh BSIT Graduate from <strong>Our Lady of Fatima University</strong>.<br>
+            Passionate about <strong>AWS Cloud</strong>, eager to grow, a fast learner,<br>
+            and a hardworking individual ready to contribute to IT teams.
+          </p>
+
+          <div class="skill-chips-centered">
+            <div class="chips-row">
+              <span class="chip">AWS Cloud</span>
+              <span class="chip">Python</span>
+              <span class="chip">Networking</span>
+              <span class ="chip">Cloud computing</span>
+             
+            </div>
+            <div class="chips-row">
+              <span class="chip">Web development</span>
+              <span class="chip">PC Troubleshooting</span>
+            </div>
+          </div>
+
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#projects">View Projects</a>
+            <button class="btn btn-secondary" type="button" data-modal-open="#certModal">
+              Credentials
+            </button>
+          </div>
+
+          <!-- Minimalist Unified Stats Bar -->
+          <div class="stats-bar">
+            <div class="stat-item">
+              <strong>4+</strong>
+              <span>Projects</span>
+            </div>
+            <div class="stat-sep" aria-hidden="true"></div>
+            <div class="stat-item">
+              <strong>11</strong>
+              <span>Certifications</span>
+            </div>
+            <div class="stat-sep" aria-hidden="true"></div>
+            <div class="stat-item">
+              <strong>BSIT</strong>
+              <span>Graduate</span>
+            </div>
+            <div class="stat-sep" aria-hidden="true"></div>
+            <div class="stat-item">
+              <strong>OLFU</strong>
+              <span>University</span>
+            </div>
+          </div>
+
+          <!-- Hero Badges Showcase -->
+          <div class="hero-badges">
+            <div class="hero-badge-item hero-badge-small">
+              <img src="badges/it-specialist-python.png" alt="IT Specialist — Python Badge">
+              <span class="hero-badge-label">Python Specialist</span>
+            </div>
+            <div class="hero-badge-item hero-badge-large">
+              <img src="badges/aws-certified-cloud-practitioner.png" alt="AWS Certified Cloud Practitioner Badge">
+              <span class="hero-badge-label">AWS Cloud Practitioner</span>
+            </div>
+            <div class="hero-badge-item hero-badge-small">
+              <img src="badges/it-specialist-networking.png" alt="IT Specialist — Networking Badge">
+              <span class="hero-badge-label">Networking Specialist</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ABOUT ===== -->
+      <section id="about" class="reveal">
+        <div class="section-head">
+          <div>
+            <div class="section-label">BACKGROUND</div>
+            <h2>About Me</h2>
+          </div>
+          <p class="section-desc">Skills · Tools · Background</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="about-card-tag">Profile</div>
+            <h3>Who I Am</h3>
+            <p>Fresh BSIT Graduate from <strong>Our Lady of Fatima University</strong>. A hardworking, fast learner who is eager to gain valuable experience in the IT field — especially in <strong>AWS Cloud</strong>. Passionate about building practical software and solving real-world problems.</p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-card-tag">Technical</div>
+            <h3>Cloud &amp; Technical Skills</h3>
+            <div class="tag-cloud">
+              <span class="tag">AWS Cloud Practitioner</span>
+              <span class="tag">Python</span>
+              <span class="tag">Java</span>
+              <span class="tag">PHP</span>
+              <span class="tag">HTML / CSS</span>
+              <span class="tag">Linux</span>
+              <span class="tag">Networking</span>
+              <span class="tag">Computer Vision</span>
+              <span class="tag">Troubleshooting</span>
+            </div>
+          </div>
+
+          <div class="about-card">
+            <div class="about-card-tag">Workflow</div>
+            <h3>Tools &amp; Platforms</h3>
+            <div class="tag-cloud">
+              <span class="tag">AWS</span>
+              <span class="tag">Eclipse</span>
+              <span class="tag">GitHub</span>
+              <span class="tag">VS Code</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">Claude</span>
+              <span class="tag">Cursor</span>
+              <span class="tag">Antigravity</span>
+              <span class="tag">Gemini</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PROJECTS ===== -->
+      <section id="projects" class="reveal">
+        <div class="section-head">
+          <div>
+            <div class="section-label">PORTFOLIO</div>
+            <h2>Projects</h2>
+          </div>
+          <p class="section-desc">Recent builds &amp; experiments</p>
+        </div>
+
+        <div class="projects-grid">
+
+          <!-- GrainScan -->
+          <article class="project-card">
+            <div class="project-thumb">
+              <span class="project-badge purple">Capstone Thesis</span>
+              <img src="picture/capstone.png" alt="GrainScan — Automated Rice Quality Inspection">
+            </div>
+            <div class="project-body">
+              <h3>GrainScan</h3>
+              <p>Automated rice quality inspection using YOLOv9 image processing. Detects &amp; classifies grain types, scores quality (High / Medium / Low), and exports reports — desktop GUI + Windows installer.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">YOLOv9</span>
+                <span class="tech-tag">Tkinter</span>
+                <span class="tech-tag">PyInstaller</span>
+                <span class="tech-tag">Computer Vision</span>
+              </div>
+              <div class="project-footer">
+                <a class="project-action-link" href="grainscan.html">View Project →</a>
+              </div>
+            </div>
+            <a class="card-click-overlay" href="grainscan.html" aria-label="Open GrainScan project"></a>
+          </article>
+
+          <!-- Payroll Management -->
+          <article class="project-card">
+            <div class="project-thumb">
+              <span class="project-badge blue">Web App</span>
+              <img src="picture/payroll.png" alt="Payroll Management System">
+            </div>
+            <div class="project-body">
+              <h3>Payroll Management</h3>
+              <p>Multi-role payroll and payslip web app with admin and employee dashboards. Handles salary computation, payslip generation, and staff logs.</p>
+              <div class="project-tech">
+                <span class="tech-tag">PHP</span>
+                <span class="tech-tag">MySQL</span>
+                <span class="tech-tag">HTML/CSS</span>
+              </div>
+              <div class="project-footer">
+                <a class="project-action-link" href="newpayroll/index.html" target="_blank" rel="noreferrer">Open Site →</a>
+              </div>
+            </div>
+            <a class="card-click-overlay" href="newpayroll/index.html" target="_blank" rel="noreferrer" aria-label="Open Payroll Management project"></a>
+          </article>
+
+          <!-- Dimplestar -->
+          <article class="project-card">
+            <div class="project-thumb thumb-dimplestar">
+              <span class="project-badge blue">Web App</span>
+              <div class="dimplestar-circle">
+                <img src="dimplestar/images/logo.png" alt="Dimplestar Bus Booking">
+              </div>
+            </div>
+            <div class="project-body">
+              <h3>Dimplestar</h3>
+              <p>Bus route booking and scheduling platform. Features terminal management, route scheduling, and online seat reservations for passengers.</p>
+              <div class="project-tech">
+                <span class="tech-tag">PHP</span>
+                <span class="tech-tag">MySQL</span>
+                <span class="tech-tag">JavaScript</span>
+              </div>
+              <div class="project-footer">
+                <a class="project-action-link" href="dimplestar/index.html" target="_blank" rel="noreferrer">Open Site →</a>
+              </div>
+            </div>
+            <a class="card-click-overlay" href="dimplestar/index.html" target="_blank" rel="noreferrer" aria-label="Open Dimplestar project"></a>
+          </article>
+
+          <!-- RC Staycation -->
+          <article class="project-card">
+            <div class="project-thumb">
+              <span class="project-badge blue">Web App</span>
+              <img src="picture/stay.png" alt="RC Staycation booking platform">
+            </div>
+            <div class="project-body">
+              <h3>RC Staycation</h3>
+              <p>Fully responsive hotel booking interface with real-time room availability, amenities showcase, and seamless booking flow. Deployed on Vercel with continuous deployment.</p>
+              <div class="project-tech">
+                <span class="tech-tag">HTML/CSS</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Vercel</span>
+              </div>
+              <div class="project-footer">
+                <a class="project-action-link" href="https://rcstaycation.vercel.app/" target="_blank" rel="noreferrer">Open Site →</a>
+              </div>
+            </div>
+            <a class="card-click-overlay" href="https://rcstaycation.vercel.app/" target="_blank" rel="noreferrer" aria-label="Open RC Staycation project"></a>
+          </article>
+
+        </div>
+      </section>
+
+     
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-left">
+        <span class="footer-brand-tag">JR</span>
+        <span class="footer-copy">&copy; <span id="year"></span> John Russel M. Magtibay</span>
+      </div>
+
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <a href="picture/Resume.pdf" target="_blank" rel="noreferrer">Resume ↗</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- ==================== CERT MODAL ==================== -->
+  <div class="modal" id="certModal" aria-hidden="true" aria-modal="true" role="dialog" aria-label="Badges viewer">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title">Badges</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="modal-counter" id="certCounter">1 / 11</span>
+          <button class="close-btn" type="button" data-modal-close aria-label="Close badges viewer">✕</button>
+        </div>
+      </div>
+
+      <div class="slider">
+        <button class="slide-btn prev" type="button" aria-label="Previous badge">‹</button>
+
+        <div class="slide-viewport badge-viewport">
+          <figure class="slide current"><img src="badges/aws-certified-cloud-practitioner.png" alt="AWS Certified Cloud Practitioner Badge"><figcaption>AWS Certified Cloud Practitioner</figcaption></figure>
+          <figure class="slide"><img src="badges/it-specialist-python.png" alt="IT Specialist — Python Badge"><figcaption>Python Specialist</figcaption></figure>
+          <figure class="slide"><img src="badges/it-specialist-networking.png" alt="IT Specialist — Networking Badge"><figcaption>Networking Specialist</figcaption></figure>
+          <figure class="slide"><img src="badges/ccna-introduction-to-networks.png" alt="CCNA Introduction to Networks Badge"><figcaption>CCNA: Introduction to Networks</figcaption></figure>
+          <figure class="slide"><img src="badges/ccna-switching-routing-and-wireless-essentials.1.png" alt="CCNA Switching, Routing and Wireless Essentials Badge"><figcaption>CCNA: Switching, Routing & Wireless</figcaption></figure>
+          <figure class="slide"><img src="badges/networking-devices-and-initial-configuration.png" alt="Networking Devices and Initial Configuration Badge"><figcaption>Networking Devices & Initial Configuration</figcaption></figure>
+          <figure class="slide"><img src="badges/network-technician-career-path.png" alt="Network Technician Career Path Badge"><figcaption>Network Technician Career Path</figcaption></figure>
+          <figure class="slide"><img src="badges/introduction-to-cybersecurity.png" alt="Introduction to Cybersecurity Badge"><figcaption>Introduction to Cybersecurity</figcaption></figure>
+          <figure class="slide"><img src="badges/endpoint-security.png" alt="Endpoint Security Badge"><figcaption>Endpoint Security</figcaption></figure>
+          <figure class="slide"><img src="badges/cyber-threat-management.png" alt="Cyber Threat Management Badge"><figcaption>Cyber Threat Management</figcaption></figure>
+          <figure class="slide"><img src="badges/ethical-hacker.png" alt="Ethical Hacker Badge"><figcaption>Ethical Hacker</figcaption></figure>
+        </div>
+
+        <button class="slide-btn next" type="button" aria-label="Next badge">›</button>
+      </div>
+
+      <div class="slide-dots" id="certDots" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // ---------- YEAR ----------
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    // ---------- THEME ----------
+    const themeToggle = document.getElementById('themeToggle');
+    const userPref    = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    function applyTheme(theme) {
+      document.body.classList.remove('light-mode', 'dark-mode');
+      document.body.classList.add(theme);
+      themeToggle.classList.toggle('is-dark', theme === 'dark-mode');
+      themeToggle.setAttribute('aria-label', theme === 'dark-mode' ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+
+    applyTheme(userPref || (prefersDark ? 'dark-mode' : 'light-mode'));
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.body.classList.contains('dark-mode');
+      const next   = isDark ? 'light-mode' : 'dark-mode';
+      applyTheme(next);
+      localStorage.setItem('theme', next);
+    });
+
+    // ---------- MOBILE MENU ----------
+    const menuBtn = document.getElementById('menuBtn');
+    const navMenu = document.getElementById('navMenu');
+    menuBtn.addEventListener('click', () => {
+      const open = navMenu.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(open));
+    });
+    navMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ---------- MODAL OPEN/CLOSE ----------
+    document.addEventListener('click', (e) => {
+      const openTrigger = e.target.closest('[data-modal-open]');
+      if (openTrigger) {
+        e.preventDefault();
+        const sel   = openTrigger.getAttribute('data-modal-open');
+        const modal = document.querySelector(sel);
+        if (modal) openModal(modal, 0);
+        return;
+      }
+
+      const closeTrigger = e.target.closest('[data-modal-close]');
+      if (closeTrigger) {
+        const modal = closeTrigger.closest('.modal');
+        if (modal) closeModal(modal);
+        return;
+      }
+      if (e.target.classList.contains('modal')) {
+        closeModal(e.target);
+      }
+    });
+
+    function openModal(modal, startIndex = 0) {
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+      go(startIndex);
+    }
+
+    function closeModal(modal) {
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal.show').forEach(closeModal);
+      }
+    });
+
+    // ---------- SLIDER ----------
+    const modal = document.getElementById('certModal');
+    const slides = () => Array.from(modal.querySelectorAll('.slide'));
+    const counter = document.getElementById('certCounter');
+    const dotsContainer = document.getElementById('certDots');
+
+    function buildDots() {
+      dotsContainer.innerHTML = '';
+      slides().forEach((_, idx) => {
+        const d = document.createElement('button');
+        d.className = 'dot' + (idx === 0 ? ' active' : '');
+        d.type = 'button';
+        d.setAttribute('aria-label', `Go to certificate ${idx + 1}`);
+        d.addEventListener('click', () => go(idx));
+        dotsContainer.appendChild(d);
+      });
+    }
+    buildDots();
+
+    let currentIndex = 0;
+
+    function go(n) {
+      const s = slides();
+      s[currentIndex].classList.remove('current');
+      dotsContainer.querySelectorAll('.dot')[currentIndex]?.classList.remove('active');
+
+      currentIndex = ((n % s.length) + s.length) % s.length;
+
+      s[currentIndex].classList.add('current');
+      dotsContainer.querySelectorAll('.dot')[currentIndex]?.classList.add('active');
+
+      if (counter) counter.textContent = `${currentIndex + 1} / ${s.length}`;
+    }
+
+    modal.querySelector('.prev').addEventListener('click', () => go(currentIndex - 1));
+    modal.querySelector('.next').addEventListener('click', () => go(currentIndex + 1));
+
+    modal.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('show')) return;
+      if (e.key === 'ArrowLeft')  go(currentIndex - 1);
+      if (e.key === 'ArrowRight') go(currentIndex + 1);
+    });
+
+    // ---------- SCROLL REVEAL ----------
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+  });
+  </script>
+
+</body>
+</html>

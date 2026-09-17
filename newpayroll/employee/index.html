@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Employee Portal — Payroll Automation</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" type="text/css" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css" />
+<style>
+  body { background: #f1f5f9; padding: 24px 12px; }
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: 12px 12px 0 0;
+  }
+  .nav-bar-custom {
+    background: #0f172a;
+    padding: 10px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .nav-bar-custom a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: background .15s;
+  }
+  .nav-bar-custom a:hover, .nav-bar-custom a.active {
+    background: #2563eb;
+    color: #fff;
+  }
+</style>
+</head>
+
+<body>
+<div id="outerwrapper" class="mx-auto" style="max-width:1150px;">
+  <div class="toolbar">
+    <div>
+      <h5 class="m-0 fw-bold text-dark">💼 Employee Self-Service Portal</h5>
+      <small class="text-muted">Welcome, <strong id="empWelcomeName">Russel Magtibay</strong> (Staff #1)</small>
+    </div>
+    <a href="../index.html" class="btn btn-outline-danger btn-sm">Sign Out</a>
+  </div>
+
+  <nav class="nav-bar-custom">
+    <a href="index.html" class="active">MY PROFILE &amp; PAYSLIP</a>
+    <a href="../admin/index.html">SWITCH TO ADMIN DEMO</a>
+    <a href="../../index.html#projects" style="margin-left:auto; background:rgba(255,255,255,.1);">← Portfolio</a>
+  </nav>
+
+  <div class="p-4 bg-white" style="border-radius: 0 0 12px 12px;">
+    <div class="row g-4">
+      <!-- Profile Card -->
+      <div class="col-md-4">
+        <div class="card p-4 border h-100">
+          <div class="text-center mb-3">
+            <div class="display-6 mb-2">👤</div>
+            <h5 class="fw-bold mb-0" id="profileName">Russel Magtibay</h5>
+            <small class="badge bg-primary" id="profilePosition">GMD/CEO</small>
+          </div>
+          <hr>
+          <div class="small mb-2 d-flex justify-content-between">
+            <span class="text-muted">Department:</span>
+            <strong id="profileDept">I.T.</strong>
+          </div>
+          <div class="small mb-2 d-flex justify-content-between">
+            <span class="text-muted">Grade Level:</span>
+            <strong id="profileGrade">18</strong>
+          </div>
+          <div class="small mb-2 d-flex justify-content-between">
+            <span class="text-muted">Years in Service:</span>
+            <strong id="profileYears">18 Years</strong>
+          </div>
+          <div class="small mb-2 d-flex justify-content-between">
+            <span class="text-muted">Employee Status:</span>
+            <span class="badge bg-success">Regular / Active</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payslip & Earnings Breakdown -->
+      <div class="col-md-8">
+        <div class="card p-4 border h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold m-0">Latest Salary Breakdown</h5>
+            <a href="../admin/print.html?id=1" class="btn btn-sm btn-outline-primary" id="btnPrintSlip">Print Voucher 🖨️</a>
+          </div>
+
+          <div class="p-3 bg-light rounded mb-3">
+            <div class="row text-center">
+              <div class="col-4">
+                <small class="text-muted d-block">Gross Earnings</small>
+                <strong class="fs-5 text-success" id="empGross">₱0</strong>
+              </div>
+              <div class="col-4">
+                <small class="text-muted d-block">Tax Deduction</small>
+                <strong class="fs-5 text-danger" id="empTax">₱0</strong>
+              </div>
+              <div class="col-4">
+                <small class="text-muted d-block">Net Take-Home</small>
+                <strong class="fs-5 text-primary" id="empNet">₱0</strong>
+              </div>
+            </div>
+          </div>
+
+          <table class="table table-sm small table-bordered mb-0">
+            <thead class="table-light">
+              <tr><th>Component</th><th class="text-end">Amount</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Basic Salary</td><td class="text-end fw-semibold" id="empBasic">₱0</td><td>Monthly rate</td></tr>
+              <tr><td>Meal Allowance</td><td class="text-end" id="empMeal">₱0</td><td>Tax-free allowance</td></tr>
+              <tr><td>Housing Allowance</td><td class="text-end" id="empHousing">₱0</td><td>Executive housing subsidy</td></tr>
+              <tr><td>Transport Allowance</td><td class="text-end" id="empTransport">₱0</td><td>Fuel &amp; travel allowance</td></tr>
+              <tr><td>Withholding Tax</td><td class="text-end text-danger fw-semibold" id="empDeduct">₱0</td><td>Bureau of Internal Revenue</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Messages / Announcements -->
+      <div class="col-12">
+        <div class="card p-4 border">
+          <h6 class="fw-bold mb-3">📬 Company Announcements &amp; HR Messages</h6>
+          <div class="list-group list-group-flush small">
+            <div class="list-group-item px-0">
+              <div class="d-flex justify-content-between">
+                <strong>HR Department</strong>
+                <small class="text-muted">Today, 9:00 AM</small>
+              </div>
+              <p class="mb-0 text-muted">Monthly payroll credited successfully to registered automated accounts.</p>
+            </div>
+            <div class="list-group-item px-0">
+              <div class="d-flex justify-content-between">
+                <strong>Accounting Office</strong>
+                <small class="text-muted">Yesterday</small>
+              </div>
+              <p class="mb-0 text-muted">Annual tax filing certificates (BIR 2316) are now ready for download.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../js/payroll-data.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const list = getStaffList();
+    const staff = list[0]; // Default to Russel
+
+    document.getElementById('empWelcomeName').textContent = staff.fname;
+    document.getElementById('profileName').textContent = staff.fname;
+    document.getElementById('profilePosition').textContent = staff.position;
+    document.getElementById('profileDept').textContent = staff.department;
+    document.getElementById('profileGrade').textContent = staff.grade || '18';
+    document.getElementById('profileYears').textContent = `${staff.years || '18'} Years`;
+
+    const basic = staff.basic || 0;
+    const meal = staff.meal || 0;
+    const housing = staff.housing || 0;
+    const transport = staff.transport || 0;
+    const tax = staff.tax || 0;
+    const other = (staff.entertainment || 0) + (staff.long_service || 0);
+    const gross = basic + meal + housing + transport + other;
+    const net = staff.totall || (gross - tax);
+
+    document.getElementById('empGross').textContent = formatCurrency(gross);
+    document.getElementById('empTax').textContent = formatCurrency(tax);
+    document.getElementById('empNet').textContent = formatCurrency(net);
+
+    document.getElementById('empBasic').textContent = formatCurrency(basic);
+    document.getElementById('empMeal').textContent = formatCurrency(meal);
+    document.getElementById('empHousing').textContent = formatCurrency(housing);
+    document.getElementById('empTransport').textContent = formatCurrency(transport);
+    document.getElementById('empDeduct').textContent = formatCurrency(tax);
+    document.getElementById('btnPrintSlip').href = `../admin/print.html?id=${staff.staff_id}`;
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GrainScan — Automated Rice Quality Inspection | John Russel M. Magtibay</title>
+  <meta name="description"
+    content="GrainScan: Capstone thesis by John Russel M. Magtibay. Automated rice quality inspection using YOLOv9 image processing and data analytics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Page-specific overrides ── */
+    .gs-hero {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0f2027 50%, #1a1a2e 100%);
+      color: #fff;
+      padding: 64px 0 48px;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    body.light-mode .gs-hero {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0f2027 50%, #1a1a2e 100%);
+    }
+
+    .gs-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, .65);
+      text-decoration: none;
+      margin-bottom: 28px;
+      transition: color .15s;
+    }
+
+    .gs-back:hover {
+      color: #fff;
+    }
+
+    .gs-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .gs-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, .1);
+      border: 1px solid rgba(255, 255, 255, .18);
+      color: #fff;
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .2px;
+    }
+
+    .gs-badge.purple {
+      background: rgba(124, 58, 237, .35);
+      border-color: rgba(167, 139, 250, .4);
+    }
+
+    .gs-badge.green {
+      background: rgba(16, 185, 129, .25);
+      border-color: rgba(52, 211, 153, .4);
+    }
+
+    .gs-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -.5px;
+      color: #fff;
+      margin-bottom: 14px;
+      line-height: 1.15;
+    }
+
+    .gs-subtitle {
+      font-size: clamp(15px, 2vw, 17px);
+      color: rgba(255, 255, 255, .7);
+      line-height: 1.7;
+      max-width: 580px;
+      margin-bottom: 28px;
+    }
+
+    .gs-tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .gs-tech {
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .15);
+      color: rgba(255, 255, 255, .85);
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+
+    /* ── Main UI screenshot ── */
+    .gs-screenshot-wrap {
+      margin-top: 48px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, .1);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, .6);
+      background: #0b0f14;
+    }
+
+    .gs-screenshot-bar {
+      background: #1c2029;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .gs-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+
+    .gs-dot.red {
+      background: #ff5f56;
+    }
+
+    .gs-dot.yellow {
+      background: #ffbd2e;
+    }
+
+    .gs-dot.green {
+      background: #27c93f;
+    }
+
+    .gs-bar-title {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255, 255, 255, .4);
+      font-weight: 500;
+    }
+
+    .gs-screenshot-wrap img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* ── Content area ── */
+    .gs-content {
+      padding: 72px 0;
+    }
+
+    .gs-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .gs-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    .gs-section-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+
+    .gs-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .gs-desc {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    /* Features list */
+    .gs-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .gs-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14.5px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    .gs-features li .feat-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: rgba(37, 99, 235, .1);
+      border: 1px solid rgba(37, 99, 235, .2);
+      display: grid;
+      place-items: center;
+      font-size: 15px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Sidebar cards */
+    .gs-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .gs-info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .gs-info-card h4 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .gs-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
+    }
+
+    .gs-info-row:last-child {
+      border-bottom: none;
+    }
+
+    .gs-info-row span:first-child {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .gs-info-row span:last-child {
+      color: var(--text);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    /* Quality grade display */
+    .gs-grades {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .gs-grade {
+      flex: 1;
+      padding: 10px 6px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid;
+    }
+
+    .gs-grade.high {
+      background: rgba(16, 185, 129, .1);
+      border-color: rgba(16, 185, 129, .3);
+      color: #10b981;
+    }
+
+    .gs-grade.medium {
+      background: rgba(234, 179, 8, .1);
+      border-color: rgba(234, 179, 8, .3);
+      color: #ca8a04;
+    }
+
+    .gs-grade.low {
+      background: rgba(239, 68, 68, .1);
+      border-color: rgba(239, 68, 68, .3);
+      color: #ef4444;
+    }
+
+    /* Screenshot thumbnails row */
+    .gs-thumbs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 48px;
+    }
+
+    @media (max-width: 640px) {
+      .gs-thumbs {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .gs-thumb-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .gs-thumb-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .gs-thumb-card img {
+      width: 100%;
+      height: 100px;
+      object-fit: contain;
+      background: var(--bg2);
+      padding: 12px;
+    }
+
+    .gs-thumb-label {
+      padding: 10px 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text2);
+      border-top: 1px solid var(--border);
+    }
+
+    /* Grain types */
+    .gs-grain-types {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .gs-grain {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      border: 1px solid;
+    }
+
+    .gs-grain.long {
+      background: rgba(59, 130, 246, .1);
+      border-color: rgba(59, 130, 246, .3);
+      color: #3b82f6;
+    }
+
+    .gs-grain.medium {
+      background: rgba(99, 102, 241, .1);
+      border-color: rgba(99, 102, 241, .3);
+      color: #6366f1;
+    }
+
+    .gs-grain.short {
+      background: rgba(168, 85, 247, .1);
+      border-color: rgba(168, 85, 247, .3);
+      color: #a855f7;
+    }
+
+    .gs-grain.broken {
+      background: rgba(239, 68, 68, .1);
+      border-color: rgba(239, 68, 68, .3);
+      color: #ef4444;
+    }
+
+    .gs-grain.discolored {
+      background: rgba(245, 158, 11, .1);
+      border-color: rgba(245, 158, 11, .3);
+      color: #f59e0b;
+    }
+  </style>
+</head>
+
+<body class="light-mode">
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="Back to portfolio">
+        <div class="logo" aria-hidden="true"></div>
+        John Russel M. Magtibay
+      </a>
+      <div class="nav-right">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme"></button>
+        <a class="btn" href="index.html#projects" style="padding:8px 16px; font-size:13.5px;">← Back to Portfolio</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <div class="gs-hero">
+    <div class="container">
+      <a class="gs-back" href="index.html#projects">← Back to Portfolio</a>
+
+      <div class="gs-badge-row">
+        <span class="gs-badge purple">🎓 Capstone Thesis</span>
+        <span class="gs-badge green">✅ Completed</span>
+        <span class="gs-badge">🐍 Python</span>
+        <span class="gs-badge">👁️ YOLOv9</span>
+        <span class="gs-badge">🖥️ Desktop App</span>
+      </div>
+
+      <h1 class="gs-title">GrainScan</h1>
+      <p class="gs-subtitle">
+        Automated rice quality inspection with YOLO image processing and data analytics.
+        Detects and classifies rice grains from photos or a live camera, scores overall
+        sample quality, and exports reports — all through a clean desktop GUI.
+      </p>
+
+      <div class="gs-tech-row">
+        <span class="gs-tech">Python 3.9+</span>
+        <span class="gs-tech">YOLOv9</span>
+        <span class="gs-tech">Tkinter GUI</span>
+        <span class="gs-tech">PyInstaller</span>
+        <span class="gs-tech">Inno Setup</span>
+        <span class="gs-tech">OpenCV</span>
+        <span class="gs-tech">Pandas</span>
+        <span class="gs-tech">Windows</span>
+      </div>
+
+      <!-- Main UI Screenshot -->
+      <div class="gs-screenshot-wrap">
+        <div class="gs-screenshot-bar">
+          <span class="gs-dot red"></span>
+          <span class="gs-dot yellow"></span>
+          <span class="gs-dot green"></span>
+          <span class="gs-bar-title">GrainScan — Automated Rice Quality Inspection</span>
+        </div>
+        <img src="picture/capstone.png"
+          alt="GrainScan Application Interface — Main UI showing rice grain detection and analysis">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTENT ── -->
+  <main class="gs-content">
+    <div class="container">
+
+      <div class="gs-grid">
+
+        <!-- LEFT: Description + Features -->
+        <div>
+          <div class="gs-section-label">Overview</div>
+          <h2 class="gs-section-title">What GrainScan Does</h2>
+          <p class="gs-desc">
+            GrainScan is a capstone thesis project that automates the process of rice
+            grain quality inspection using computer vision. Traditional inspection is
+            done manually and is slow and inconsistent. GrainScan uses a trained YOLOv9
+            model to detect, classify, and measure individual rice grains in milliseconds.
+          </p>
+          <p class="gs-desc">
+            The system can analyze a still image or grab frames from a live camera feed,
+            then generate a detailed quality report showing grain composition and an
+            overall quality grade.
+          </p>
+
+          <div class="gs-section-label" style="margin-top:32px;">Grain Classification</div>
+          <h3 class="gs-section-title" style="font-size:18px; margin-bottom:12px;">Detected Grain Types</h3>
+          <div class="gs-grain-types" style="margin-bottom:32px;">
+            <span class="gs-grain long">Long</span>
+            <span class="gs-grain medium">Medium</span>
+            <span class="gs-grain short">Short</span>
+            <span class="gs-grain broken">Broken</span>
+            <span class="gs-grain discolored">Discolored</span>
+          </div>
+
+          <div class="gs-section-label">Key Features</div>
+          <h3 class="gs-section-title" style="font-size:18px; margin-bottom:16px;">Application Features</h3>
+          <ul class="gs-features">
+            <li>
+              <span class="feat-icon">👁️</span>
+              <div><strong>Grain Detection & Classification</strong> — YOLOv9 model identifies and classifies each grain
+                by type (Long, Medium, Short, Broken, Discolored) in real time.</div>
+            </li>
+            <li>
+              <span class="feat-icon">📊</span>
+              <div><strong>Quality Scoring</strong> — Automatically computes an overall sample grade (High / Medium /
+                Low) based on grain composition ratios.</div>
+            </li>
+            <li>
+              <span class="feat-icon">🖥️</span>
+              <div><strong>Desktop GUI</strong> — Clean Tkinter interface for scanning images, viewing analytics,
+                exporting reports, and training/fine-tuning models.</div>
+            </li>
+            <li>
+              <span class="feat-icon">📷</span>
+              <div><strong>Live Camera Capture</strong> — Snap frames from a connected camera and run the same full
+                analysis pipeline in real time.</div>
+            </li>
+            <li>
+              <span class="feat-icon">📄</span>
+              <div><strong>Report Export</strong> — Generate and export detailed inspection reports with grain counts,
+                percentages, and quality grade.</div>
+            </li>
+            <li>
+              <span class="feat-icon">📦</span>
+              <div><strong>Windows Installer</strong> — Packaged with PyInstaller + Inno Setup for easy distribution as
+                a standalone Windows executable.</div>
+            </li>
+          </ul>
+
+
+
+          <!-- RIGHT: Sidebar -->
+          <div class="gs-sidebar">
+
+            <!-- Quality Grades -->
+            <div class="gs-info-card">
+              <h4>Quality Grades</h4>
+              <div class="gs-grades">
+                <div class="gs-grade high">🟢<br>High</div>
+                <div class="gs-grade medium">🟡<br>Medium</div>
+                <div class="gs-grade low">🔴<br>Low</div>
+              </div>
+              <p style="font-size:12.5px; color:var(--muted); margin-top:12px; line-height:1.6;">
+                Quality grades are computed from the composition of Long, Medium, Short, Broken, and Discolored grains
+                in the sample.
+              </p>
+            </div>
+
+            <!-- Project Info -->
+            <div class="gs-info-card">
+              <h4>Project Info</h4>
+              <div class="gs-info-row">
+                <span>Type</span>
+                <span>Capstone Thesis</span>
+              </div>
+              <div class="gs-info-row">
+                <span>University</span>
+                <span>Our Lady of Fatima Univ.</span>
+              </div>
+              <div class="gs-info-row">
+                <span>Platform</span>
+                <span>Windows 10/11</span>
+              </div>
+              <div class="gs-info-row">
+                <span>Language</span>
+                <span>Python 3.9+</span>
+              </div>
+              <div class="gs-info-row">
+                <span>AI Model</span>
+                <span>YOLOv9</span>
+              </div>
+              <div class="gs-info-row">
+                <span>GUI</span>
+                <span>Tkinter</span>
+              </div>
+              <div class="gs-info-row">
+                <span>Packaging</span>
+                <span>PyInstaller + Inno Setup</span>
+              </div>
+            </div>
+
+            <!-- Tech Stack -->
+            <div class="gs-info-card">
+              <h4>Tech Stack</h4>
+              <div class="gs-tech-row" style="gap:6px;">
+                <span class="tech-tag"
+                  style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500;">Python</span>
+                <span class="tech-tag"
+                  style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500;">YOLOv9</span>
+                <span class="tech-tag"
+                  style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500;">OpenCV</span>
+                <span class="tech-tag"
+                  style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500;">Tkinter</span>
+                <span class="tech-tag"
+                  style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500;">Pandas</span>
+                <span class="tech-tag"
+                  style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500;">PyInstaller</span>
+                <span class="tech-tag"
+                  style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500;">Inno
+                  Setup</span>
+                <span class="tech-tag"
+                  style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500;">NumPy</span>
+              </div>
+            </div>
+
+            <!-- Links -->
+            <div class="gs-info-card">
+              <h4>Project Files</h4>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <a class="btn" href="Grainscan-main/README.md" target="_blank"
+                  style="justify-content:center; font-size:13.5px;">📄 View README</a>
+                <a class="btn primary" href="index.html#projects" style="justify-content:center; font-size:13.5px;">←
+                  Back to Portfolio</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="container foot">
+      <div class="foot-brand">John Russel M. Magtibay</div>
+      <div class="foot-copy">© <span id="year"></span> GrainScan — Capstone Thesis</div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const themeToggle = document.getElementById('themeToggle');
+      const userPref = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      function applyTheme(theme) {
+        document.body.classList.remove('light-mode', 'dark-mode');
+        document.body.classList.add(theme);
+        themeToggle.classList.toggle('is-dark', theme === 'dark-mode');
+      }
+
+      applyTheme(userPref || (prefersDark ? 'dark-mode' : 'light-mode'));
+
+      themeToggle.addEventListener('click', () => {
+        const isDark = document.body.classList.contains('dark-mode');
+        const next = isDark ? 'light-mode' : 'dark-mode';
+        applyTheme(next);
+        localStorage.setItem('theme', next);
+      });
+    });
+  </script>
+
+</body>
+
+</html>
