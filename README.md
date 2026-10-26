@@ -3,7 +3,7 @@
 Personal portfolio of an aspiring **Cloud Engineer** focused on **AWS** and **Terraform (Infrastructure as Code)**.
 
 **Live site:** https://russelmagtibay-portfolio.vercel.app
-**GitHub:** https://github.com/russelmagtibay · **LinkedIn:** https://www.linkedin.com/in/john-russel-m-magtibay-423770247/
+**GitHub:** https://github.com/russelmagtibay
 
 ---
 
@@ -12,7 +12,6 @@ Personal portfolio of an aspiring **Cloud Engineer** focused on **AWS** and **Te
 | Project | What it demonstrates | Stack |
 | --- | --- | --- |
 | [Serverless Event-Driven Lead Capture Pipeline](https://github.com/russelmagtibay/Serverless-Event-Driven-Lead-Capture-Pipeline-on-AWS) | Fully modular Terraform; private S3 behind CloudFront OAC; least-privilege Lambda IAM; Free Tier friendly | Terraform, CloudFront, S3, API Gateway, Lambda, DynamoDB, SES |
-| [Electa Infrastructure](https://github.com/russelmagtibay/electa-infra) | Multi-environment (dev/prod) modules, encrypted remote state with locking, federated auth | Terraform, Cognito, S3, RDS, DynamoDB |
 | [Secure RDS Architecture](https://github.com/russelmagtibay/terraform-aws-secure-rds-architecture) | Variable validation and lifecycle postconditions that enforce private networking | Terraform, RDS, VPC, Security Groups |
 | [IAM RBAC Automation](https://github.com/russelmagtibay/terraform-aws-iam-rbac-automation) | Declarative, YAML-driven role-based access and user onboarding | Terraform, IAM, YAML |
 | [Financial Transaction Engine](https://github.com/russelmagtibay/enterprise-financial-transaction-engine) | Queue buffering, dead-letter queues, SNS fan-out, KMS encryption at rest | SQS, SNS, DynamoDB, KMS, LocalStack |
@@ -35,13 +34,13 @@ Static site — HTML, CSS and vanilla JavaScript (no build step). Hosted on **Ve
 
 ```text
 .
-├── index.html            # Home: hero, about, cloud & terraform, projects, contact
+├── index.html            # Home: hero, about, cloud & terraform, projects
 ├── grainscan.html        # GrainScan case study
 ├── style.css             # Design tokens, light/dark themes, responsive layout
 ├── newpayroll/           # Payroll demo (admin + employee portals)
 ├── dimplestar/           # Bus booking demo
 ├── badges/               # Certification badges
-├── picture/              # Screenshots and resume
+├── picture/              # Project screenshots
 └── vercel.json           # Routing, security headers, caching
 ```
 

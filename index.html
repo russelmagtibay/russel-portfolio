@@ -38,7 +38,6 @@
           <li><a href="#about">About</a></li>
           <li><a href="#cloud">Cloud</a></li>
           <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -94,18 +93,18 @@
           <!-- Minimalist Unified Stats Bar -->
           <div class="stats-bar">
             <div class="stat-item">
-              <strong>12</strong>
+              <strong>11</strong>
               <span>Projects</span>
             </div>
             <div class="stat-sep" aria-hidden="true"></div>
             <div class="stat-item">
-              <strong>8</strong>
-              <span>AWS / Cloud Builds</span>
+              <strong>7</strong>
+              <span>AWS / Cloud Builds</span></span>
             </div>
             <div class="stat-sep" aria-hidden="true"></div>
             <div class="stat-item">
-              <strong>4</strong>
-              <span>Terraform IaC Repos</span>
+              <strong>3</strong>
+              <span>Terraform IaC Repos</span></span>
             </div>
             <div class="stat-sep" aria-hidden="true"></div>
             <div class="stat-item">
@@ -203,71 +202,26 @@
           <p class="section-desc">Modular, secure, reproducible AWS infrastructure</p>
         </div>
 
-        <!-- Featured -->
-        <article class="cloud-feature">
-          <div class="cloud-feature-body">
-            <span class="infra-kind">Featured · Terraform</span>
-            <h3 style="margin-top:12px;">Serverless Event-Driven Lead Capture Pipeline on AWS</h3>
-            <p>A production-style serverless pipeline provisioned 100% with modular Terraform — zero console clicks. A global CDN fronts a private S3 origin, and form submissions flow through API Gateway and Lambda into DynamoDB with instant SES email alerts, all within the AWS Free Tier.</p>
-            <ul class="cloud-points">
-              <li>Private S3 bucket reachable only through CloudFront Origin Access Control (OAC)</li>
-              <li>Least-privilege IAM: Lambda scoped to <code>dynamodb:PutItem</code> and <code>ses:SendEmail</code> only</li>
-              <li>Separate Terraform modules per service with remote backend and variable-driven config</li>
-            </ul>
-            <div class="project-tech">
-              <span class="tech-tag">Terraform</span>
-              <span class="tech-tag">CloudFront</span>
-              <span class="tech-tag">S3 + OAC</span>
-              <span class="tech-tag">API Gateway</span>
-              <span class="tech-tag">Lambda (Python 3.12)</span>
-              <span class="tech-tag">DynamoDB</span>
-              <span class="tech-tag">SES</span>
-            </div>
-            <div class="project-footer">
-              <a class="project-action-link" href="https://github.com/russelmagtibay/Serverless-Event-Driven-Lead-Capture-Pipeline-on-AWS" target="_blank" rel="noreferrer">View on GitHub →</a>
-            </div>
-          </div>
-
-          <div class="arch-panel" role="img" aria-label="Architecture: CloudFront to S3 and API Gateway, then Lambda, then DynamoDB and SES">
-            <div class="arch-title">architecture / request flow</div>
-            <div class="arch-node"><strong>User Browser</strong><span>HTTPS</span></div>
-            <div class="arch-link">↓</div>
-            <div class="arch-node"><strong>CloudFront CDN</strong><span>edge + TLS</span></div>
-            <div class="arch-link">↓</div>
-            <div class="arch-split">
-              <div class="arch-node"><strong>S3</strong><span>private · OAC</span></div>
-              <div class="arch-node"><strong>API Gateway</strong><span>HTTP API v2</span></div>
-            </div>
-            <div class="arch-link">↓</div>
-            <div class="arch-node accent"><strong>Lambda</strong><span>Python 3.12</span></div>
-            <div class="arch-link">↓</div>
-            <div class="arch-split">
-              <div class="arch-node"><strong>DynamoDB</strong><span>on-demand</span></div>
-              <div class="arch-node"><strong>SES</strong><span>owner alert</span></div>
-            </div>
-          </div>
-          <a class="card-click-overlay" href="https://github.com/russelmagtibay/Serverless-Event-Driven-Lead-Capture-Pipeline-on-AWS" target="_blank" rel="noreferrer" aria-label="Open Serverless Lead Capture Pipeline on GitHub"></a>
-        </article>
-
         <!-- Terraform modules -->
-        <div class="infra-subhead">Terraform Modules &amp; Platform Engineering</div>
+        <div class="infra-subhead">Terraform · Infrastructure as Code</div>
         <div class="infra-grid">
-
             <article class="infra-card">
               <span class="infra-kind ">Terraform</span>
-              <h3>Electa Infrastructure (Multi-Env IaC)</h3>
-              <p>Modular Terraform for Cognito federated authentication (Google OAuth), S3 media storage and an RDS PostgreSQL module. Isolated dev and prod environments with encrypted S3 remote state and DynamoDB state locking.</p>
+              <h3>Serverless Lead Capture Pipeline</h3>
+              <p>Event-driven pipeline provisioned 100% with modular Terraform: CloudFront serves a private S3 origin via Origin Access Control, while API Gateway and a least-privilege Python Lambda write leads to DynamoDB and send SES alerts. Free Tier friendly.</p>
               <div class="project-tech">
                 <span class="tech-tag">Terraform</span>
-                <span class="tech-tag">Cognito</span>
-                <span class="tech-tag">S3</span>
-                <span class="tech-tag">RDS</span>
-                <span class="tech-tag">Remote State</span>
+                <span class="tech-tag">CloudFront</span>
+                <span class="tech-tag">S3 + OAC</span>
+                <span class="tech-tag">API Gateway</span>
+                <span class="tech-tag">Lambda</span>
+                <span class="tech-tag">DynamoDB</span>
+                <span class="tech-tag">SES</span>
               </div>
               <div class="project-footer">
-                <a class="project-action-link" href="https://github.com/russelmagtibay/electa-infra" target="_blank" rel="noreferrer">View on GitHub →</a>
+                <a class="project-action-link" href="https://github.com/russelmagtibay/Serverless-Event-Driven-Lead-Capture-Pipeline-on-AWS" target="_blank" rel="noreferrer">View on GitHub →</a>
               </div>
-              <a class="card-click-overlay" href="https://github.com/russelmagtibay/electa-infra" target="_blank" rel="noreferrer" aria-label="Open Electa Infrastructure (Multi-Env IaC) on GitHub"></a>
+              <a class="card-click-overlay" href="https://github.com/russelmagtibay/Serverless-Event-Driven-Lead-Capture-Pipeline-on-AWS" target="_blank" rel="noreferrer" aria-label="Open Serverless Lead Capture Pipeline on GitHub"></a>
             </article>
 
             <article class="infra-card">
@@ -512,40 +466,6 @@
         </div>
       </section>
 
-      <!-- ===== CONTACT ===== -->
-      <section id="contact" class="reveal">
-        <div class="section-head">
-          <div>
-            <div class="section-label">GET IN TOUCH</div>
-            <h2>Contact</h2>
-          </div>
-          <p class="section-desc">Open to Cloud / AWS opportunities</p>
-        </div>
-
-        <div class="contact-strip four">
-          <a class="contact-item" href="mailto:russelmagtibay15@gmail.com">
-            <span class="contact-label">Email</span>
-            <span class="contact-value">russelmagtibay15@gmail.com</span>
-            <span class="contact-arrow">→</span>
-          </a>
-          <a class="contact-item" href="https://github.com/russelmagtibay" target="_blank" rel="noreferrer">
-            <span class="contact-label">GitHub</span>
-            <span class="contact-value">github.com/russelmagtibay</span>
-            <span class="contact-arrow">→</span>
-          </a>
-          <a class="contact-item" href="https://www.linkedin.com/in/john-russel-m-magtibay-423770247/" target="_blank" rel="noreferrer">
-            <span class="contact-label">LinkedIn</span>
-            <span class="contact-value">john-russel-m-magtibay</span>
-            <span class="contact-arrow">→</span>
-          </a>
-          <a class="contact-item" href="picture/Resume.pdf" target="_blank" rel="noreferrer">
-            <span class="contact-label">Resume</span>
-            <span class="contact-value">Download PDF</span>
-            <span class="contact-arrow">→</span>
-          </a>
-        </div>
-      </section>
-
     </div>
   </main>
 
@@ -561,9 +481,7 @@
         <a href="#about">About</a>
         <a href="#cloud">Cloud</a>
         <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
         <a href="https://github.com/russelmagtibay" target="_blank" rel="noreferrer">GitHub ↗</a>
-        <a href="picture/Resume.pdf" target="_blank" rel="noreferrer">Resume ↗</a>
       </nav>
     </div>
   </footer>
