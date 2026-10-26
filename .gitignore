@@ -1,0 +1,6 @@
+style.css.modified
+*.log
+.vercel
+node_modules/
+.DS_Store
+Thumbs.db
