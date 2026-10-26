@@ -3,7 +3,8 @@
   "cleanUrls": false,
   "trailingSlash": true,
   "redirects": [
-    { "source": "/grainscan", "destination": "/grainscan.html", "permanent": true }
+    { "source": "/grainscan", "destination": "/grainscan.html", "permanent": true },
+    { "source": "/grainscan/", "destination": "/grainscan.html", "permanent": true }
   ],
   "headers": [
     {
